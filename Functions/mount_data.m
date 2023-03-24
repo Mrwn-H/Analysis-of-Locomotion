@@ -1,0 +1,18 @@
+function[dataset] = mount_data(path)
+
+    files = dir(path);
+    
+    if contains(path,'Healthy')
+        data_files = files(3:6);
+    else
+        data_files = files(5:7);
+    end
+
+    N_files = length(data_files);
+    dataset = struct();
+    for i=1:N_files
+        data = load([data_files(i).folder '\' data_files(i).name]);
+        dataset.(['condition_' num2str(i)]) = data.data;
+    end
+
+end
