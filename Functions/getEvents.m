@@ -1,46 +1,76 @@
-function[L_events,R_events] = getEvents(kin_params,Fs)
+function[L_events,R_events] = getEvents(kin_params,Fs,info)
+    if strcmp(info,"Healthy")
+        
+        %% Left
+        dz = diff(kin_params.L_ANK_TOE(:,3))*120;
+        dz(abs(dz)>2000) = [];
+        [pks,locs] = findpeaks(dz,'MinPeakProminence',1.2*nanmean(abs(dz)),'MinPeakDistance',0.3*Fs,'MinPeakHeight',nanmean(abs(dz)));
+        
+        [pks_min,locs_min] = findpeaks(-dz,'MinPeakProminence',1.2*nanmean(abs(dz)),'MinPeakDistance',0.3*Fs,'MinPeakHeight',1.5*nanmean(abs(dz)));
+        %findpeaks(-1*dz,'MinPeakProminence',0.2*nanmean(abs(dz)),'Annotate','extents');
+        L_events = [];
+        for i=1:length(locs_min)-1
+            min_bound = locs_min(i);
+            max_bound = locs_min(i+1);
+            if i==62
+                a = 0;
+            end
+            if sum(locs>min_bound & locs<max_bound) == 2
+                L_events = [L_events; reshape(locs(locs>min_bound & locs<max_bound),1,2)];
+            end
+        end
     
-    %% Left
-    dz = diff(kin_params.L_ANK_TOE(:,3))*120;
-    [pks,locs] = findpeaks(dz,'MinPeakHeight',nanmean(abs(dz)),'MinPeakDistance',0.3*Fs);
-    %findpeaks(-1*dz,'MinPeakProminence',0.2*nanmean(abs(dz)),'Annotate','extents');
-    L_events = [];
-    if pks(1) < pks(2)
-        i_start = 1;
+        %% Right
+        dz = diff(kin_params.R_ANK_TOE(:,3))*120;
+        dz(abs(dz)>2000) = [];
+        [pks,locs] = findpeaks(dz,'MinPeakProminence',1.2*nanmean(abs(dz)),'MinPeakDistance',0.3*Fs,'MinPeakHeight',nanmean(abs(dz)));
+        
+        [pks_min,locs_min] = findpeaks(-dz,'MinPeakProminence',1.2*nanmean(abs(dz)),'MinPeakDistance',0.3*Fs,'MinPeakHeight',1.5*nanmean(abs(dz)));
+        %findpeaks(-1*dz,'MinPeakProminence',0.2*nanmean(abs(dz)),'Annotate','extents');
+        R_events = [];
+    
+        for i=1:length(locs_min)-1
+            min_bound = locs_min(i);
+            max_bound = locs_min(i+1);
+            if sum(locs>min_bound & locs<max_bound) == 2
+                R_events = [R_events; reshape(locs(locs>min_bound & locs<max_bound),1,2)];
+            end
+        end
     else
-        i_start = 2;
-    end
-
-    locs = locs(pks>0);
-    N_events = length(locs(i_start:end));
-    for i=i_start:2:N_events
-        if i <N_events
-            new_first = find( dz(locs(i):locs(i+1)) < 0.25*pks(2), 1 );
-            new_second = find( dz(locs(i)+new_first:locs(i+1)) > 0.60*pks(2), 1 );
-            L_events = [L_events;[locs(i),locs(i+1)]];
+        %% Left
+        dz = diff(kin_params.LANK(:,3))*120;
+        dz(abs(dz)>2000) = [];
+        [pks,locs] = findpeaks(dz,'MinPeakProminence',0.1*nanmean(abs(dz)),'MinPeakDistance',0.3*Fs,'MinPeakHeight',0.1*nanmean(abs(dz)));
+        
+        [pks_min,locs_min] = findpeaks(-dz ,'MinPeakProminence',0.1*nanmean(abs(dz)),'MinPeakDistance',0.3*Fs);
+        %findpeaks(-1*dz,'MinPeakProminence',0.2*nanmean(abs(dz)),'Annotate','extents');
+        L_events = [];
+        for i=1:length(locs_min)-1
+            min_bound = locs_min(i);
+            max_bound = locs_min(i+1);
+            if i==62
+                a = 0;
+            end
+            if sum(locs>min_bound & locs<max_bound) == 2
+                L_events = [L_events; reshape(locs(locs>min_bound & locs<max_bound),1,2)];
+            end
+        end
+    
+        %% Right
+        dz = diff(kin_params.ANK(:,3))*120;
+        dz(abs(dz)>2000) = [];
+        [pks,locs] = findpeaks(dz,'MinPeakProminence',0.1*nanmean(abs(dz)),'MinPeakDistance',0.3*Fs,'MinPeakHeight',0.1*nanmean(abs(dz)));
+        
+        [pks_min,locs_min] = findpeaks(-dz ,'MinPeakProminence',0.1*nanmean(abs(dz)),'MinPeakDistance',0.3*Fs);
+        %findpeaks(-1*dz,'MinPeakProminence',0.2*nanmean(abs(dz)),'Annotate','extents');
+        R_events = [];
+    
+        for i=1:length(locs_min)-1
+            min_bound = locs_min(i);
+            max_bound = locs_min(i+1);
+            if sum(locs>min_bound & locs<max_bound) == 2
+                R_events = [R_events; reshape(locs(locs>min_bound & locs<max_bound),1,2)];
+            end
         end
     end
-
-    %% Right
-    dz = diff(kin_params.R_ANK_TOE(:,3))*120;
-    [pks,locs] = findpeaks(dz,'MinPeakHeight',nanmean(abs(dz)),'MinPeakDistance',0.3*Fs);
-    %findpeaks(-1*dz,'MinPeakProminence',0.2*nanmean(abs(dz)),'Annotate','extents');
-    R_events = [];
-    if pks(1) < pks(2)
-        i_start = 1;
-    else
-        i_start = 2;
-    end
-
-    locs = locs(pks>0);
-    N_events = length(locs(i_start:end));
-
-    for i=i_start:2:N_events
-        if i <N_events
-            new_first = find( dz(locs(i):locs(i+1)) < 0.25*pks(2), 1 );
-            new_second = find( dz(locs(i)+new_first:locs(i+1)) > 0.60*pks(2), 1 );
-            R_events = [R_events;[locs(i),locs(i+1)]];
-        end
-    end
-
 end

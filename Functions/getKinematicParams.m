@@ -24,5 +24,7 @@ function[kinematic_params] = getKinematicParams(data)
     kinematic_params.R_knee_angle = R_knee_angle;
     kinematic_params.L_ANK_TOE = L_ANK_TOE;
     kinematic_params.R_ANK_TOE = R_ANK_TOE;
+    kinematic_params.LANK = data.LANK;
+    kinematic_paramsRLANK = data.RANK;
 
 end

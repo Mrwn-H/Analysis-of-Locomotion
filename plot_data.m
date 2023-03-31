@@ -1,4 +1,4 @@
-function[ax] = plot_data(data,fig_title,scale)
+function[ax] = plot_data(data,fig_title,plot_params,gaits)
 
     streams = fieldnames(data);
     streams_emg = {};
@@ -44,30 +44,72 @@ function[ax] = plot_data(data,fig_title,scale)
         
     end
     
-    figure;
+    fig = figure;
+    [ha, pos] = tight_subplot(ceil(length(streams_emg)/2),2,[.05 .03],[.1 .1],[.05 .05]);
     for i = 1:length(streams_emg)
+        current_axis = ha(i);
         sensor = streams_emg{i};
         emg_data = data.(sensor);
         emg_data = preprocess_signal(emg_data);
         n_samples = length(emg_data);
         time = dt_emg:dt_emg:n_samples*dt_emg;
         env = envelope(emg_data,1000);
-        subplot(ceil(length(streams_emg)/2),2,vals(i))
-        plot(time,emg_data,time,env)
-        title(sensor)
+        %subplot(ceil(length(streams_emg)/2),2,vals(i))
+        plot(current_axis,time,emg_data)
+        title(current_axis,sensor)
 
-        if scale
+        if plot_params.scale
             ylim([val_std(1,1) val_std(1,2)]);
         end
 
         xlabel('Time [ms]');
         ylabel('EMG [V]');
         sgtitle(fig_title);
-
-    end  
+        
+        if ~isempty(gaits)
+            hold on
+            gaits_leftO = gaits.L_events.time(:,2); %Left Foot Off
+            gaits_leftS = gaits.L_events.time(:,1); %Left Foot Strike
+            gaits_rightO = gaits.R_events.time(:,2); %Right Foot Off
+            gaits_rightS = gaits.R_events.time(:,1); %Right Foot Strike
+            
+            y_min = val_std(1);
+            y_max = val_std(2);
+            
+            if strcmp(plot_params.gait,'cycle')
+                for k1 = 1:length(gaits_leftS)-1
+                    xline(current_axis,gaits_leftS(k1),'--r')
+                end
+            
+            elseif strcmp(plot_params.gait,'swing')
+                %Plotting of left swing patches
+                for k1 = 1:length(gaits_leftS)-1
+                    q = [gaits_leftS(k1+1) gaits_leftO(k1)];
+                    qx = [min(q) max(q)  max(q)  min(q)];
+                    yl = [y_min,y_max];
+                    qy = [[2 2]*yl(1) [2 2]*yl(2)];
+                    patch(current_axis,qx, qy,'r', 'FaceAlpha',0.2, 'EdgeColor','none','DisplayName','Left Swing');
+                end
+                %Plotting of right swing patches
+                for k1 = 1:length(gaits_rightS)-1
+                    
+                    q = [gaits_rightS(k1+1) gaits_rightO(k1)];
+                    qx = [min(q) max(q)  max(q)  min(q)];
+                    yl = [y_min,y_max];
+                    qy = [[2 2]*yl(1) [2 2]*yl(2)];
+                    patch(current_axis,qx, qy,'k', 'FaceAlpha',0.2, 'EdgeColor','none','DisplayName','Right Swing');
+                end       
+            end
+                
+            
+            
+            
+        end
+    end
+    
     
     %% TO DO: PLOTTING OF MARKERS
-    figure;
+    fig = figure;
     for j=1:length(streams_markers)
         sensor = streams_markers{j};
         marker_data = data.(sensor);

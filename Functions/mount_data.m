@@ -1,11 +1,13 @@
-function[dataset] = mount_data(path)
+function[dataset,info] = mount_data(path)
 
     files = dir(path);
     
     if contains(path,'Healthy')
         data_files = files(3:6);
+        info = "Healthy";
     else
         data_files = files(5:7);
+        info = "SCI";
     end
 
     N_files = length(data_files);
