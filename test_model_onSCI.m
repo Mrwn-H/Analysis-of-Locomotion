@@ -1,7 +1,7 @@
 close all; clear all; clc;
 
 %% load model
-load("model_archive/very_decent_inverted_model.mat")
+load("very_decent_inverted_model.mat")
 
 %% load data
 uiwait(msgbox("Select the " + ...
