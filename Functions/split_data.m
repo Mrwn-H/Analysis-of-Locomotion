@@ -1,7 +1,11 @@
-function [Xtrain, Ytrain, Xtest, Ytest]=split_data(X,Y,train_ratio)
+function [Xtrain, Ytrain, Xtest, Ytest]=split_data(X,Y,train_ratio,option)
+L = 8;
+if strcmp(option,"both") 
+    L = 16;
+end
 
-for i = 1:4
-    N = length(Y{i}); split_idx = floor(train_ratio*N)
+for i = 1:L
+    N = length(Y{i}); split_idx = floor(train_ratio*N);
     % fixed partitioning : data until split_idx is training, the rest is testing
     Xtrain{i} = X{i}(:, 1:split_idx); Ytrain{i} = Y{i}(1:split_idx); 
     Xtest{i} = X{i}(:, split_idx:end); Ytest{i} = Y{i}(split_idx:end);
