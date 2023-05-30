@@ -6,7 +6,7 @@ function[dataset,info] = mount_data(path)
         data_files = files(3:6);
         info = "Healthy";
     else
-        data_files = files(5:7);
+        data_files = files(3:5);
         info = "SCI";
     end
 

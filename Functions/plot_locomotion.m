@@ -33,21 +33,21 @@ plot_R=scatter3(squeeze(marker_datas(1,1,5:8)),squeeze(marker_datas(1,2,5:8)),sq
 
 
 
-
 %% Simulation
 for k=2:length(t_marker)-1
     axis([minx maxx miny maxy minz maxz]);
+    if ~isempty(events)
+        if any(events.L_events.idx(:,1) < k & events.L_events.idx(:,2) > k)
+            plot_L.MarkerFaceColor ='r';
+        else
+            plot_L.MarkerFaceColor ='b';
+        end
     
-    if any(events.L_events.idx(:,1) < k & events.L_events.idx(:,2) > k)
-        plot_L.MarkerFaceColor ='r';
-    else
-        plot_L.MarkerFaceColor ='b';
-    end
-
-    if any(events.R_events.idx(:,1) < k & events.R_events.idx(:,2) > k)
-        plot_R.MarkerFaceColor = 'r';
-    else
-        plot_R.MarkerFaceColor ='b';
+        if any(events.R_events.idx(:,1) < k & events.R_events.idx(:,2) > k)
+            plot_R.MarkerFaceColor = 'r';
+        else
+            plot_R.MarkerFaceColor ='b';
+        end
     end
 
     plot_L.XData=marker_datas(k,1,1:4);
