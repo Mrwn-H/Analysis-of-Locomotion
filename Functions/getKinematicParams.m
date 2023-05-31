@@ -53,6 +53,7 @@ function[kinematic_params] = getKinematicParams(dataset,events_tbl)
         kinematic_tbl.gait_dur = gait_dur(:,1);
         r_stance_swing = diff(sort(reshape(R_events.time,2*height(R_events.time),1)));
         l_stance_swing = diff(sort(reshape(L_events.time,2*height(L_events.time),1)));
+        
         kinematic_tbl.r_stance_dur = r_stance_swing(1:2:min_length*2);
         kinematic_tbl.r_swing_dur = r_stance_swing(2:2:min_length*2);
         kinematic_tbl.l_stance_dur = l_stance_swing(1:2:min_length*2);
