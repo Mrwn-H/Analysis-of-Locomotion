@@ -1,0 +1,38 @@
+function [emg_envelope] = getEnv(emg_signal,fs,plot_signals)
+            % INPUTS: 
+            %
+            %   emg_signal: signal to be filtered
+            %   plot_signal: 1 to plot the signals, 0 not to plot
+            %   fs: sampling frequency
+                              
+            % Rectify signal
+            abs_signal = abs(emg_signal);
+            
+
+            % Apply lowpass filter on rectified signal
+            cutoff_freq = 150;
+            lp_signal = lowpass(abs_signal,cutoff_freq,fs);
+
+            % Compute the envelope
+            [emg_envelope, ~] = envelope(lp_signal,400,'peak');
+            
+            emg_mean = mean(emg_signal);
+            emg_std = std(emg_signal);
+            
+            
+%             % Smooth the envelope using a moving average filter
+%             window_size = fs/2; % Half a second
+%             emg_envelope = movmean(emg_envelope, window_size);
+            
+            % Plot the original signal and the smoothed envelope
+            if plot_signals
+                figure;
+                t = (0:length(emg_signal)-1)/fs;
+                plot(t,emg_signal,t,emg_envelope);
+                legend('Original Signal','Envelope');
+                xlabel('Time (s)');
+                ylabel('Amplitude');
+                yline(emg_mean+2*emg_std,'--','Burst Threshold');
+            end
+
+        end
