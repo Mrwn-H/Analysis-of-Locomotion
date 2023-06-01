@@ -63,6 +63,9 @@ function[kinematic_params] = getKinematicParams(dataset,events_tbl)
         max_hip_angl = double.empty(min_length,0);
         max_knee_angl = double.empty(min_length,0);
         max_foot_angl = double.empty(min_length,0);
+        min_hip_angl = double.empty(min_length,0);
+        min_knee_angl = double.empty(min_length,0);
+        min_foot_angl = double.empty(min_length,0);
 
         events_idx = ref_events.idx;
         
@@ -73,15 +76,29 @@ function[kinematic_params] = getKinematicParams(dataset,events_tbl)
             max_knee_angl(k,2) = max(R_knee_angle(events_idx(k,1):events_idx(k+1,1)));
             max_foot_angl(k,1) = max(L_foot_angle(events_idx(k,1):events_idx(k+1,1)));
             max_foot_angl(k,2) = max(R_foot_angle(events_idx(k,1):events_idx(k+1,1)));
+            
+            min_hip_angl(k,1) = min(L_hip_angle(events_idx(k,1):events_idx(k+1,1)));
+            min_hip_angl(k,2) = min(R_hip_angle(events_idx(k,1):events_idx(k+1,1)));
+            min_knee_angl(k,1) = min(L_knee_angle(events_idx(k,1):events_idx(k+1,1)));
+            min_knee_angl(k,2) = min(R_knee_angle(events_idx(k,1):events_idx(k+1,1)));
+            min_foot_angl(k,1) = min(L_foot_angle(events_idx(k,1):events_idx(k+1,1)));
+            min_foot_angl(k,2) = min(R_foot_angle(events_idx(k,1):events_idx(k+1,1)));
 
         end
 
-        kinematic_tbl.l_hip_angle = max_hip_angl(:,1);
-        kinematic_tbl.r_hip_angle = max_hip_angl(:,2);
-        kinematic_tbl.l_knee_angle = max_knee_angl(:,1);
-        kinematic_tbl.r_knee_angle = max_knee_angl(:,2);
-        kinematic_tbl.l_foot_angle = max_foot_angl(:,1);
-        kinematic_tbl.r_foot_angle = max_foot_angl(:,2);
+        kinematic_tbl.l_hip_max_angle = max_hip_angl(:,1);
+        kinematic_tbl.r_hip_max_angle = max_hip_angl(:,2);
+        kinematic_tbl.l_knee_max_angle = max_knee_angl(:,1);
+        kinematic_tbl.r_knee_max_angle = max_knee_angl(:,2);
+        kinematic_tbl.l_foot_max_angle = max_foot_angl(:,1);
+        kinematic_tbl.r_foot_max_angle = max_foot_angl(:,2);
+        
+        kinematic_tbl.l_hip_min_angle = min_hip_angl(:,1);
+        kinematic_tbl.r_hip_min_angle = min_hip_angl(:,2);
+        kinematic_tbl.l_knee_min_angle = min_knee_angl(:,1);
+        kinematic_tbl.r_knee_min_angle = min_knee_angl(:,2);
+        kinematic_tbl.l_foot_min_angle = min_foot_angl(:,1);
+        kinematic_tbl.r_foot_min_angle = min_foot_angl(:,2);
 
     kinematic_params.(conditions{i}) = kinematic_tbl;
     end
