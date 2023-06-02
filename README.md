@@ -6,6 +6,7 @@ This is the code for the NeuroRestore project.
 
 To make sure all code runs well, the datasets have to be placed in a particular way, described bellow:
 
+```
 Analysis-of-Locomtion
 ├── Functions
 ├── main.m
@@ -22,6 +23,7 @@ Analysis-of-Locomtion
 │   │   ├── DM002_TDM_1kmh_NoEES.mat
 │   │   ├── (...)
 
+```
 ## Code description
 
 ---
