@@ -8,6 +8,10 @@ This is the code for the NeuroRestore project.
 
 ---
 
+### `main.m`
+
+---
+
 ### `neural_net.m`
 
 A script to define, train and save a neural network.
@@ -35,10 +39,10 @@ DESCRIPTION
 
 ## Authors
 
-- Marwan
+- Marwan Haioun
 
 - Loic Pachoud
 
 - Alexei Ermochkine
 
-- Nicolas
+- Nicolas Nouel
