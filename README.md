@@ -104,6 +104,15 @@ Output: Kinetics parameters for PCA analysis
 
 Function that that compute kinetic parameters 
 
+---
+
+### `Functions/geEMGParams`
+
+Inputs: Dataset, Gait Events
+
+Output: EMG parmeters for PCA analysis
+
+Function that that EMG parameters
 
 ## Authors
 
