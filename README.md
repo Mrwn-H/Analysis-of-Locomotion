@@ -98,11 +98,11 @@ Function that compute kinematic parameters
 
 ### `Functions/geVelocityParams`
 
-Inputs: Emg signal, and a boolean (if plotting is needed)
+Inputs: Dataset, Gait Events
 
-Output: Processed signal
+Output: Kinetics parameters for PCA analysis
 
-Function that apply a low-pass filter, who rectify the signal and envevelope it
+Function that that compute kinetic parameters 
 
 
 ## Authors
