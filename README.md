@@ -50,12 +50,59 @@ A script to load a model and test its predictions on the SCI dataset by visualis
 A folder containing various functions
 
 ---
-
 ### `Functions/computePCA.m`
 
-DESCRIPTION
+Inptuts: dataset, gait events
+
+Output: PCA coefficient, score, explained_ratio 
+
+Function that compute PCA over given dataset
 
 ---
+
+### `Functions/getEvents.m`
+
+Input: kinematic_Data, sampling time, data info (healthy or SCI)
+
+Output: Left Gait Event, Right Gait Event
+
+Function that compute kinematically gait events 
+
+---
+
+### `Functions/getAllEvents.m`
+
+Function that calls getEvents in order to apply it to the whole dataset:
+
+---
+
+### `Functions/getEnv.m`
+
+Inputs: Emg signal, and a boolean (if plotting is needed)
+
+Output: Processed signal
+
+Function that apply a low-pass filter, who rectify the signal and envevelope it
+
+---
+
+### `Functions/geKinematicParams`
+
+Inputs: Dataset, Gait Events
+
+Output: Kinematic parameters for PCA analysis
+
+Function that compute kinematic parameters 
+
+---
+
+### `Functions/geVelocityParams`
+
+Inputs: Emg signal, and a boolean (if plotting is needed)
+
+Output: Processed signal
+
+Function that apply a low-pass filter, who rectify the signal and envevelope it
 
 
 ## Authors
