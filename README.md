@@ -8,6 +8,18 @@ This is the code for the NeuroRestore project.
 
 ---
 
+### `neural_net.m`
+
+A script to define, train and save a neural network.
+
+---
+
+### `test_model_onSCI.m`
+
+A script to load a model and test its predictions on the SCI dataset by visualising the 3D animation of the locomotion.
+
+---
+
 ### `Functions`
 
 A folder containing various functions
@@ -19,6 +31,7 @@ A folder containing various functions
 DESCRIPTION
 
 ---
+
 
 ## Authors
 
