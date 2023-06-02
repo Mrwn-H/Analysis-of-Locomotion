@@ -2,7 +2,25 @@
 
 This is the code for the NeuroRestore project.
 
+## IMPORTANT: place of data in code
 
+To make sure all code runs well, the datasets have to be placed in a particular way, described bellow:
+
+Analysis-of-Locomtion
+├── Functions
+├── main.m
+├── (...)
+├── data 
+│   ├── Healthy Dataset
+│   │   ├── 01
+│   │   │   ├── 1_AML01_2kmh.mat
+│   │   │   ├── (...)
+│   │   ├── 02
+│   │   │   ├── asset_price_GBM_sim.csv
+│   │   │   ├── (...)
+│   ├── SCI Human
+│   │   ├── DM002_TDM_1kmh_NoEES.mat
+│   │   ├── (...)
 
 ## Code description
 
