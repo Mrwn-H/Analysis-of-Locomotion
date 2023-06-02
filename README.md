@@ -54,9 +54,15 @@ This is the code for the NeuroRestore project.
 
 ---
 
-### `model`
+### `Functions`
 
-A folder containing different versions of the DDPG implementation (denoted by v1, v2, etc...) defined by the weights of the neural-networks and a text file quickly describing the changes for each version.
+A folder containing various functions
+
+---
+
+### `Functions/computePCA`
+
+DESCRIPTION
 
 ---
 
